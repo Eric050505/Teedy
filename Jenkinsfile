@@ -2,8 +2,8 @@ pipeline {
 	agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('yang5')
-        DOCKER_IMAGE = 'eric050505/teedy_yyz' // your Docker Hub user name and
-        DOCKER_TAG = "${env.BUILD_NUMBER}" // use build number as tag
+        DOCKER_IMAGE = 'eric050505/teedy_yyz'
+        DOCKER_TAG = "${env.BUILD_NUMBER}"
     }
     stages {
 		stage('Build') {
@@ -20,16 +20,15 @@ pipeline {
         stage('Building image') {
 			steps {
 				script {
-					// assume Dockerfile locate at root
                     docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}")
                 }
             }
         }
-// Uploading Docker images into Docker Hub
+
         stage('Upload image') {
 			steps {
 				script {
-                    docker.withRegistry('https://registry.hub.docker.com','DOCKER_HUB_CREDENTIALS') {
+                    docker.withRegistry('https://registry.hub.docker.com','yang5') {
                         docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push()
                         docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push('latest')
                     }
