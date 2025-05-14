@@ -2,7 +2,7 @@ pipeline {
 	agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('dockerhub_credentials')
-        DOCKER_IMAGE = 'yang/teedy-app' // your Docker Hub user name and
+        DOCKER_IMAGE = 'yang/teedy-yyz' // your Docker Hub user name and
         DOCKER_TAG = "${env.BUILD_NUMBER}" // use build number as tag
     }
     stages {
